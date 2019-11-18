@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>login</title>
+  <meta name="generator" content="Google Web Designer 6.0.1.0801">
+  <style type="text/css" id="gwd-text-style">
+    p {
+      margin: 0px;
+    }
+    h1 {
+      margin: 0px;
+    }
+    h2 {
+      margin: 0px;
+    }
+    h3 {
+      margin: 0px;
+    }
+  </style>
+  <style type="text/css">
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+    }
+    body {
+      background-color: transparent;
+      transform: perspective(1400px) matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+      transform-style: preserve-3d;
+    }
+    .gwd-input-rleg {
+      position: absolute;
+      width: 313px;
+      height: 45px;
+      left: 215px;
+      top: 156px;
+    }
+    .gwd-input-1y8j {
+      position: absolute;
+      width: 317px;
+      height: 45px;
+      left: 215px;
+      top: 229px;
+    }
+    .gwd-button-194v {
+      position: absolute;
+      width: 321px;
+      height: 35px;
+      left: 215px;
+      top: 303px;
+    }
+  </style>
+</head>
+
+<body class="htmlNoPages">
+  <form  method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="gwd-input-rleg">
+    <input class="gwd-input-1y8j" type="password">
+    <button class="gwd-button-194v">Login</button>
+  </form>
+</body>
+
+</html>
