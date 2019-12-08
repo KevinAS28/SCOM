@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
@@ -69,8 +71,8 @@
     }
     .gwd-p-1g6f {
       top: 49.08px;
-      width: 191.52px;
       left: 312.45px;
+      width: 191.57px;
     }
     .gwd-p-8jsg {
       left: 63%;
@@ -81,8 +83,8 @@
     .gwd-p-1mje {
       font-size: 30px;
       top: 50.07px;
-      width: 162.66px;
       left: 526px;
+      width: 162.55px;
     }
     .gwd-p-1t49 {
       font-size: 30px;
@@ -92,15 +94,15 @@
     }
     .gwd-p-wjls {
       font-size: 30px;
-      left: 1071.83px;
-      width: 162.66px;
       top: 50.07px;
+      width: 162.55px;
+      left: 1272.83px;
     }
     .gwd-p-grgu {
       font-size: 30px;
       top: 50.07px;
-      width: 162.66px;
-      left: 894.95px;
+      width: 162.55px;
+      left: 1095.95px;
     }
     .gwd-hr-1gh0 {
       position: absolute;
@@ -502,13 +504,13 @@
     }
     .gwd-button-yxnw {
       left: 30%;
-      top: 531px;
+      top: 578px;
     }
     .gwd-button-1eua {
       left: 54%;
       background-image: none;
       background-color: rgba(176, 21, 49, 0.65);
-      top: 439px;
+      top: 486px;
     }
     .gwd-input-1kaa {
       top: 292px;
@@ -523,13 +525,13 @@
       top: 432px;
     }
     .gwd-select-1dxy {
-      top: 444px;
+      top: 472px;
     }
     .gwd-button-1qkr {
-      top: 496px;
+      top: 521px;
     }
     .gwd-button-1non {
-      top: 496px;
+      top: 521px;
     }
     .gwd-select-e6hu {
       top: 232px;
@@ -550,7 +552,7 @@
       top: 388px;
     }
     .gwd-button-1p5l {
-      top: 439px;
+      top: 486px;
     }
     .gwd-input-aoz7 {
       left: 12.36%;
@@ -574,13 +576,29 @@
     .gwd-input-1x61 {
       top: 187px;
     }
+    .gwd-p-1anm {
+      left: 639px;
+      top: -158px;
+    }
+    .gwd-div-1d1r {
+      left: 0px;
+      top: 0.125px;
+    }
+    .gwd-p-183r {
+      left: 710.4px;
+      width: 162.55px;
+    }
+    .gwd-p-1nvh {
+      left: 900.4px;
+    }
   </style>
+
 
   {% if messages %}
   {% for message in messages %}
 
   <script>
-    alert("{{ message }}");
+    alert("{{ message|safe }}");
   </script>
 
   {% endfor %}
@@ -596,7 +614,7 @@
   HEADER
   {% endcomment %}
   <div style="position: fixed; width: 100%;height: 190px;background-color: white;">
-    <img class="gwd-img-5jmq" src="smkn1cibinong.png">
+    <img class="gwd-img-5jmq" src="{% static 'smkn1cibinong.png' %}">
     <p class="gwd-p-343u">SCOM</p>  
     <a href="{% url 'SCOM_APP:datasiswa' %}" class="">
       <p class="gwd-p-343u gwd-p-163o gwd-p-1g6f">Data Siswa</p>
@@ -604,10 +622,16 @@
     <a href="{% url 'SCOM_APP:dataguru' %}" class="">
       <p class="gwd-p-343u gwd-p-163o gwd-p-bw48 gwd-p-1mje">Data Guru</p>
     </a>
-    <a href="" class="">
-      <p class="gwd-p-343u gwd-p-163o gwd-p-bw48 gwd-p-8jsg gwd-p-1t49">Nilai</p>
+    <a href="{% url 'SCOM_APP:datauas' %}" class="">
+      <p class="gwd-p-343u gwd-p-163o gwd-p-bw48 gwd-p-8jsg gwd-p-1t49">Nilai UAS</p>
     </a>
-    <a href="" class="">
+    <a href="{% url 'SCOM_APP:datauts' %}" class="">
+      <p class="gwd-p-343u gwd-p-163o gwd-p-bw48 gwd-p-8jsg gwd-p-1t49 gwd-p-183r gwd-p-1nvh">Nilai UTS</p>    
+    </a>
+    {% comment %} <a href="" class="">
+      <p class="gwd-p-343u gwd-p-163o gwd-p-bw48 gwd-p-8jsg gwd-p-1t49">Nilai UTS</p>
+    </a>     {% endcomment %}
+    <a href="{% url 'SCOM_APP:datajadwal' %}" class="">
       <p class="gwd-p-343u gwd-p-163o gwd-p-bw48 gwd-p-8jsg gwd-p-181f gwd-p-grgu">Jadwal</p>
     </a>
     <a href="" class="">
