@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'SCOM_APP'
+    'SCOM_APP',
+    'User'
 ]
 
 MIDDLEWARE = [
@@ -133,4 +134,9 @@ DATABASES = {
         }
     }
 }
+
+
+AUTH_USER_MODEL = 'User.LoginGuru'
+
+AUTHENTICATION_BACKENDS = ('User.backends.AuthenticationBackend.AuthenticationBackend','django.contrib.auth.backends.ModelBackend',)
 

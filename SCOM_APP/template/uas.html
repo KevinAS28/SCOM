@@ -1,0 +1,229 @@
+
+{% extends 'data.html' %}
+
+{# data #}  
+{% block first %}
+
+    <table class="gwd-table-lxqp" border="1">
+    <tbody>
+      <tr>
+        <td>
+          <p class="" style="text-align: center;"><strong>NIS</strong></p>
+        </td>
+        <td>
+          <p class="" style="text-align: center;"><strong>Nama</strong></p>
+        </td>
+        <td>
+          <p class="" style="text-align: center;"><strong>Kelas</strong></p>
+        </td>
+        <td>
+          <p class="" style="text-align: center;"><strong>Jurusan</strong></p>
+        </td>
+        <td>
+          <p class="" style="text-align: center;"><strong>Mapel</strong></p>
+        </td>
+        <td>
+          <p class="" style="text-align: center;"><strong>Nilai</strong></p>
+        </td>
+        {% comment %} <td>
+          <p class="" style="text-align: center;"><strong>Alamat</strong></p>
+        </td>
+        <td>
+          <p class="" style="text-align: center;"><strong>Status Aktif</strong></p>
+        </td>
+        <td>
+          <p class="" style="text-align: center;"><strong>Jenis Kelamin</strong></p>
+        </td> {% endcomment %}
+      </tr>
+      {% for sis in nilaiuas %} 
+      <tr id="row{{sis.id}}" onclick="edit({{sis.id}});">
+        {% for s in sis %} 
+        <td >
+          <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="{{s.data0}}{{sis.id}}" class="gwd-span-1qhp gwd-span-14jg">{{s}}</p>
+        </td>
+        {% endfor %}
+      </tr>
+       {% endfor %}
+    </tbody>
+  </table>
+{% endblock first %}
+  
+  
+  {% block second %}
+
+    <form method="GET" action="" id="filter-form" >
+      <select class="gwd-select-1318" id="to-filter" name="to-filter" onchange="filter_form1();" onclick="filter_form1();" >
+        <option>
+          Tidak ada filter
+        </option>
+        <option name="nis">
+          NIS
+        </option>
+        <option name="jurusan">
+          Jurusan
+        </option>
+        <option name="tingkat_kelas">
+          Kelas
+        </option>
+        <option name="mapel">
+          Mapel
+        </option>
+        <option name="nilai">
+          Nilai
+        </option>
+        {% comment %} <option name="alamat">
+          Alamat
+        </option>
+        <option name="status_aktif">
+          Status Aktif
+        </option>
+        <option name="jk">
+          Jenis Kelamin
+        </option> {% endcomment %}
+      </select>
+      <input class="gwd-input-edeh" name="filter"  id="filter_input" onkeypress="filter_form(event);">
+    </form>
+    <button class="gwd-button-1leh" type="button" onclick="document.getElementById('tambah-data').style.display='inline';"><span class="gwd-span-dp74">+</span><span class="gwd-span-v48n"><br></span><span class="gwd-span-12h1">+</span></button>
+  </div>
+
+  {# ADD #}
+  <div id="tambah-data" class="gwd-div-1cka" style="display: none;"><span class="gwd-span-1eyg">Tambah data</span>
+    <form method="POST" action="{% url 'SCOM_APP:create-uas' %}">
+      {% csrf_token %}
+
+      {# hidden #}
+      <select style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-10cx gwd-input-18mp gwd-select-1dxy" name="status_aktif">
+        <option value="1" class="gwd-option-wonj">Aktif</option>
+        <option value="0" class="gwd-option-cdm7">Tidak Aktif</option>
+      </select>
+
+      <button class="gwd-button-13el gwd-button-4f1q gwd-button-1qkr">Tambah</button>
+      {# hidden #}
+      {% comment %} <input value="1" style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-qd8y gwd-input-1o61" name="nis" placeholder="NIS" type="number"> {% endcomment %}
+      <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-1xcz gwd-input-19mg" name="nis" placeholder="NIS" maxlength="100">
+      <select  style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir gwd-select-e6hu" name="jurusan" placeholder="Jurusan">
+        <option value="RPL" class="gwd-option-r1dv">RPL</option>
+        <option value="TP" class="gwd-option-1tk5">TP</option>
+      </select>
+
+      <select style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-rp1b gwd-input-o3wc gwd-input-1qyw" name="tingkat_kelas" placeholder="Kelas" name="kelas">
+        <option value="10" selected="">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
+
+      {# hidden #}
+      <input style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-5mwd gwd-input-i653 gwd-input-1kaa" name="tanggal_lahir" placeholder="Tanggal Lahir" type="date">
+ 
+      <select  name="mapel" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir gwd-select-e6hu">
+        {% for m0 in mapel %}
+        <option>{{m0}}</option>
+        {% endfor %}
+      </select>
+
+      {# hidden #}
+      <input style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-rp1b gwd-input-o3wc gwd-input-1qyw" name="tempat_lahir" placeholder="Tempat Lahir" maxlength="100">
+
+      <input  class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir" name="nilai" placeholder="Nilai" maxlength="6" type="number">
+
+      {# hidden #}
+      <input style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-h05d gwd-input-nl9g gwd-input-iym2" name="alamat" placeholder="Alamat" maxlength="100">
+      
+      {# hidden #}
+      <select style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-10cx gwd-input-1qll gwd-select-45d9 gwd-select-145j" name="jk">
+        <option value="0" class="gwd-option-c99y">Perempuan</option>
+        <option value="1" class="gwd-option-fpfj">Laki-laki</option>
+      </select>
+
+      <button class="gwd-button-13el gwd-button-5iye gwd-button-1non" name="batal" type="button" onclick="document.getElementById('tambah-data').style.display='none';">Batal</button>
+    </form>
+  </div>
+
+
+  {# EDIT #}
+  <div id="edit-data" class="gwd-div-1ckb" style="display: none;position: fixed;">
+    <span class="gwd-span-1eyg">Edit data</span>
+    <form method="POST" action="{% url 'SCOM_APP:uas-edit' %}">
+      {% csrf_token %}
+
+      <input readonly="readonly" class="gwd-input-13a4 gwd-input-65dz gwd-input-qd8y gwd-input-1o61" name="nis" placeholder="NIS" id="nis_edit" >
+      <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-1xcz gwd-input-19mg"  name="nilai" placeholder="Nilai" id="nilai_edit">
+      <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir" name="mapel" placeholder="Mapel" maxlength="100" id="mapel_edit" > 
+          {% for m in mapel %}
+          <option>
+            {{m}}
+          </option>
+          {% endfor %}
+      </select>
+
+      <button class="gwd-button-13el gwd-button-5iye gwd-button-yxnw" type="button" onclick="document.getElementById('edit-data').style.display='none';">Batal</button>
+      <button class="gwd-button-13el gwd-button-4f1q gwd-button-1p5l" onclick="edit_submit();">Edit</button>
+      <button class="gwd-button-13el gwd-button-4f1q gwd-button-1eua" onclick="hapus_submit();">Hapus</button>
+       <input style="display: none;"  id="action-edit-id" name="action-edit" value="">
+      
+      <input style="display: none;" type="hidden" id="toedit-id" name="toedit" value="">
+      {% comment %}
+      <select style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-10cx gwd-input-18mp gwd-select-1m41" name="status_aktif" id="status_edit">
+        <option value="1" class="gwd-option-wonj">Aktif</option>
+        <option value="0" class="gwd-option-cdm7">Tidak Aktif</option>
+      </select>
+      {% endcomment %}
+
+      <select style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir" name="jurusan" placeholder="Jurusan" id="jurusan_edit">
+        <option value="RPL" class="gwd-option-r1dv">RPL</option>
+        <option value="TP" class="gwd-option-1tk5">TP</option>
+      </select>
+
+      
+      <input style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-5mwd gwd-input-i653 gwd-input-1n7d" name="tanggal_lahir" placeholder="Tanggal Lahir" type="date" id="tgl_lah_edit">
+      <input style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-rp1b gwd-input-o3wc gwd-input-2t6q" name="tempat_lahir" placeholder="Tempat Lahir" maxlength="100" id="tmpt_lah_edit">
+      <input style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-h05d gwd-input-nl9g gwd-input-5cqc" name="alamat" placeholder="Alamat" maxlength="100" id="alamat_edit">
+      <select style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-10cx gwd-input-1qll gwd-select-45d9 gwd-select-of5b" name="jk" id="jk_edit">
+        <option value="0" class="gwd-option-c99y">Perempuan</option>
+        <option value="1" class="gwd-option-fpfj">Laki-laki</option>
+      </select>
+      <select style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir gwd-select-e6hu" name="tingkat_kelas" placeholder="Kelas" id="kelas_edit">
+        <option value="10" selected="">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select> 
+    </form>
+  </div>
+  {% endblock second %}
+
+  {% block script %}
+    function edit(rowid) {
+      var edit = document.getElementById('edit-data');
+      var editid = document.getElementById('toedit-id');
+      editid.value = rowid;
+      console.log("row-id "+rowid.toString());
+
+      var data_col_map = [
+      {% for i in raw_col %} "{{i}}", {% endfor %}
+      ];
+
+      for (i = 0; i < data_col_map.length; i++) {
+        var a = data_col_map[i] + "_edit";
+        var b = (data_col_map[i] + rowid.toString());
+        console.log("a: " + a);
+        console.log("b: " + b);
+        console.log(document.getElementById(b).innerHTML);
+        document.getElementById(a).value = document.getElementById(b).innerHTML;
+      }
+
+      edit.style.display = 'inline';
+    }
+
+    function filter_form1() {
+      console.log(document.getElementById("to-filter").selectedIndex);
+      if (document.getElementById("to-filter").selectedIndex==0){
+        window.location.href="{% url 'SCOM_APP:datauas' %}";
+        return false;
+      }      
+      if (document.getElementById("filter_input").value != "") {
+        document.getElementById("filter-form").submit();
+        return false;
+      }
+      return true;
+    }
+  {% endblock script %}

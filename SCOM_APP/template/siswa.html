@@ -4,7 +4,7 @@
 {# data #}  
 {% block first %}
 
-    <table class="gwd-table-lxqp" border="1">
+    <table class="gwd-table-lxqp" border="1" style="width: 90%;">
     <tbody>
       <tr>
         <td>
@@ -101,8 +101,10 @@
       <input class="gwd-input-13a4 gwd-input-65dz gwd-input-qd8y gwd-input-1o61" name="nis" placeholder="NIS" type="number">
       <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-1xcz gwd-input-19mg" name="nama" placeholder="Nama Siswa" maxlength="100">
       <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir" name="jurusan" placeholder="Jurusan">
-        <option value="RPL" class="gwd-option-r1dv">RPL</option>
-        <option value="TP" class="gwd-option-1tk5">TP</option>
+        {% for major in majors %}
+          <option value="{{major.nama_singkatan_jurusan}}" class="gwd-option-r1dv">{{major.nama_singkatan_jurusan}}</option>
+        {% endfor %}
+        {% comment %} <option value="TP" class="gwd-option-1tk5">TP</option> {% endcomment %}
       </select>
       <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir gwd-select-e6hu" name="tingkat_kelas" placeholder="Kelas" name="kelas">
         <option value="10" selected="">10</option>
@@ -112,10 +114,10 @@
       <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-5mwd gwd-input-i653 gwd-input-1kaa" name="tanggal_lahir" placeholder="Tanggal Lahir" type="date">
       <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-rp1b gwd-input-o3wc gwd-input-1qyw" name="tempat_lahir" placeholder="Tempat Lahir" maxlength="100">
       <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-h05d gwd-input-nl9g gwd-input-iym2" name="alamat" placeholder="Alamat" maxlength="100">
-      <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-10cx gwd-input-1qll gwd-select-45d9 gwd-select-145j" name="jk">
+      <select  class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-10cx gwd-input-1qll gwd-select-45d9 gwd-select-of5b" name="jk">
         <option value="0" class="gwd-option-c99y">Perempuan</option>
         <option value="1" class="gwd-option-fpfj">Laki-laki</option>
-      </select>
+      </select>      
       <button class="gwd-button-13el gwd-button-5iye gwd-button-1non" name="hapus" type="button" onclick="document.getElementById('tambah-data').style.display='none';">Batal</button>
     </form>
   </div>
@@ -135,7 +137,7 @@
       </select>
       <button class="gwd-button-13el gwd-button-4f1q gwd-button-1p5l" onclick="edit_submit();">Edit</button>
       <button class="gwd-button-13el gwd-button-4f1q gwd-button-1eua" onclick="hapus_submit();">Hapus</button>
-      <input class="gwd-input-13a4 gwd-input-65dz gwd-input-qd8y gwd-input-1o61" name="nis" placeholder="NIS" id="nis_edit" type="hidden">
+      <input class="gwd-input-13a4 gwd-input-65dz gwd-input-qd8y gwd-input-1o61" name="nis" placeholder="NIS" id="nis_edit" style="display: none;">
       <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-1xcz gwd-input-19mg" name="nama" placeholder="Nama Siswa" maxlength="100" id="nama_edit" >
       <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir" name="jurusan" placeholder="Jurusan" id="jurusan_edit">
         <option value="RPL" class="gwd-option-r1dv">RPL</option>
@@ -144,10 +146,12 @@
       <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-5mwd gwd-input-i653 gwd-input-1n7d" name="tanggal_lahir" placeholder="Tanggal Lahir" type="date" id="tgl_lah_edit">
       <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-rp1b gwd-input-o3wc gwd-input-2t6q" name="tempat_lahir" placeholder="Tempat Lahir" maxlength="100" id="tmpt_lah_edit">
       <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-h05d gwd-input-nl9g gwd-input-5cqc" name="alamat" placeholder="Alamat" maxlength="100" id="alamat_edit">
-      <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-10cx gwd-input-1qll gwd-select-45d9 gwd-select-of5b" name="jk" id="jk_edit">
+
+      <select  class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-10cx gwd-input-1qll gwd-select-45d9 gwd-select-of5b" name="jk" id="jk_edit">
         <option value="0" class="gwd-option-c99y">Perempuan</option>
         <option value="1" class="gwd-option-fpfj">Laki-laki</option>
       </select>
+
       <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir gwd-select-e6hu" name="tingkat_kelas" placeholder="Kelas" id="kelas_edit">
         <option value="10" selected="">10</option>
         <option value="11">11</option>

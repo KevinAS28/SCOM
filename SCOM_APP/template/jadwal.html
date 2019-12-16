@@ -1,0 +1,204 @@
+
+{% extends 'data.html' %}
+
+{# data #}  
+{% block first %}
+
+    <table class="gwd-table-lxqp" border="1" style="width: 90%;">
+    <tbody>
+      <tr>
+        <td>
+          <p class="" style="text-align: center;"><strong>NIP</strong></p>
+        </td>
+        <td>
+          <p class="" style="text-align: center;"><strong>Nama Guru</strong></p>
+        </td>        
+        <td>
+          <p class="" style="text-align: center;"><strong>Mapel</strong></p>
+        </td>
+        <td>
+          <p class="" style="text-align: center;"><strong>Kelas</strong></p>
+        </td>
+        <td>
+          <p class="" style="text-align: center;"><strong>Jurusan</strong></p>
+        </td>
+        <td>
+          <p class="" style="text-align: center;"><strong>Waktu Mulai</strong></p>
+        </td>
+        <td>
+          <p class="" style="text-align: center;"><strong>Waktu Berhenti</strong></p>
+        </td>
+      </tr>
+      {% for sis in jadwal %} 
+      <tr id="row{{sis.id}}" onclick="edit({{sis.id}});">
+        {% for s in sis %} 
+        <td >
+          <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="{{s.data0}}{{sis.id}}" class="gwd-span-1qhp gwd-span-14jg">{{s}}</p>
+        </td>
+        {% endfor %}
+      </tr>
+       {% endfor %}
+    </tbody>
+  </table>
+{% endblock first %}
+  
+  
+  {% block second %}
+
+    <form method="GET" action="" id="filter-form" >
+      <select class="gwd-select-1318" id="to-filter" name="to-filter" onchange="filter_form1();" onclick="filter_form1();" >
+        <option>
+          Tidak ada filter
+        </option>
+        <option name="nis">
+          NIP
+        </option>
+        <option name="mapel">
+          Mapel
+        </option>                        
+        <option name="kelas">
+          Kelas
+        </option>                               
+        <option name="mulai_belajar">
+          Waktu Berhenti Belajar
+        </option>        
+        <option name="berhenti_belajar">
+          Waktu Berhenti Belajar
+        </option>               
+      </select>
+      <input class="gwd-input-edeh" name="filter"  id="filter_input" onkeypress="filter_form(event);">
+    </form>
+    <button class="gwd-button-1leh" type="button" onclick="document.getElementById('tambah-data').style.display='inline';"><span class="gwd-span-dp74">+</span><span class="gwd-span-v48n"><br></span><span class="gwd-span-12h1">+</span></button>
+  </div>
+
+  {# ADD #}
+  <div id="tambah-data" class="gwd-div-1cka" style="display: none;"><span class="gwd-span-1eyg">Tambah data</span>
+    <form method="POST" action="{% url 'SCOM_APP:create-jadwal' %}">
+      {% csrf_token %}
+      {% comment %} <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-10cx gwd-input-18mp gwd-select-1dxy" name="status_aktif">
+        <option value="1" class="gwd-option-wonj">Aktif</option>
+        <option value="0" class="gwd-option-cdm7">Tidak Aktif</option>
+      </select> {% endcomment %}
+      <button class="gwd-button-13el gwd-button-4f1q gwd-button-1qkr">Tambah</button>
+      <select class="gwd-input-13a4 gwd-input-65dz gwd-input-qd8y gwd-input-1o61" name="nip" placeholder="NIP">
+        {% for nip, nama in teachers %}
+          <option value="{{nip}}">{{nip}} - {{nama}}</option>
+        {% endfor %}
+      </select>
+      
+      <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-1xcz gwd-input-19mg" name="mapel" placeholder="Mapel" maxlength="100">
+        {% for mapel in mapels %}
+          <option>{{mapel.nama}}</option>
+        {% endfor %}
+      </select>
+
+      <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir" name="jurusan" placeholder="Jurusan">
+        {% for major in majors %}
+          <option value="{{major.nama_singkatan_jurusan}}" class="gwd-option-r1dv">{{major.nama_jurusan}}</option>
+        {% endfor %}
+        
+        <option value="TP" class="gwd-option-1tk5">TP</option>
+      </select>
+      <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir gwd-select-e6hu" name="kelas" placeholder="Kelas" name="kelas">
+        <option value="10" selected="">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
+      <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-5mwd gwd-input-i653 gwd-input-1kaa" name="mulai_belajar" placeholder="Mulai Belajar" type="time">
+      <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-rp1b gwd-input-o3wc gwd-input-1qyw" name="berhenti_belajar" placeholder="Berhenti Belajar" type="time">
+
+      {% comment %} <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-h05d gwd-input-nl9g gwd-input-iym2" name="alamat" placeholder="Alamat" maxlength="100"> {% endcomment %}
+      
+      <button class="gwd-button-13el gwd-button-5iye gwd-button-1non" name="hapus" type="button" onclick="document.getElementById('tambah-data').style.display='none';">Batal</button>
+    </form>
+  </div>
+
+
+  {# EDIT #}
+  <div id="edit-data" class="gwd-div-1ckb" style="display: none;position: fixed;">
+    <span class="gwd-span-1eyg">Edit data</span>
+    <form method="POST" action="{% url 'SCOM_APP:datajadwal-edit' %}">
+      {% csrf_token %}
+      <input type="hidden" id="action-edit-id" name="action-edit" value="">
+      <input type="hidden" id="toedit-id" name="toedit" value="">
+      <input type="hidden" id="nama_edit" name="" value="" disabled style="display: none;">
+      <button class="gwd-button-13el gwd-button-5iye gwd-button-yxnw" type="button" onclick="document.getElementById('edit-data').style.display='none';">Batal</button>
+      {% comment %} <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-10cx gwd-input-18mp gwd-select-1m41" name="status_aktif" id="status_edit">
+        <option value="1" class="gwd-option-wonj">Aktif</option>
+        <option value="0" class="gwd-option-cdm7">Tidak Aktif</option>
+      </select> {% endcomment %}
+      <button class="gwd-button-13el gwd-button-4f1q gwd-button-1p5l" onclick="edit_submit();">Edit</button>
+      <button class="gwd-button-13el gwd-button-4f1q gwd-button-1eua" onclick="hapus_submit();">Hapus</button>
+      <input class="gwd-input-13a4 gwd-input-65dz gwd-input-qd8y gwd-input-1o61" name="nip" placeholder="NIP" id="nip_edit" >
+
+      {% comment %} <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-1xcz gwd-input-19mg" name="mapel" placeholder="Nama Siswa" maxlength="100" > {% endcomment %}
+      <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-1xcz gwd-input-19mg" name="mapel" placeholder="Mapel" maxlength="100" id="mapel_edit" >
+        {% for mapel in mapels %}
+          <option>{{mapel.nama}}</option>
+        {% endfor %}
+      </select>
+
+
+      <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir" name="jurusan" placeholder="Jurusan" id="jurusan_edit">
+        {% for major in majors %}
+          <option value="{{major.nama_singkatan_jurusan}}" class="gwd-option-r1dv">{{major.nama_jurusan}}</option>
+        {% endfor %}
+      </select>
+
+      {% comment %} <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-5mwd gwd-input-i653 gwd-input-1n7d" name="mulai_belajar" placeholder="Mulai Belajar" type="date" id="tgl_lah_edit"> {% endcomment %}
+      {% comment %} <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-rp1b gwd-input-o3wc gwd-input-2t6q" name="mulai_belajar" placeholder="Berhenti Belajar" maxlength="100" id="tmpt_lah_edit"> {% endcomment %}
+      {% comment %} <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-h05d gwd-input-nl9g gwd-input-5cqc" name="alamat" placeholder="Alamat" maxlength="100" id="alamat_edit"> {% endcomment %}
+      <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-5mwd gwd-input-i653 gwd-input-1kaa" name="mulai_belajar" placeholder="Mulai Belajar" type="time" name="mulai_belajar" id="mulai_belajar_edit">
+      <input class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-rp1b gwd-input-o3wc gwd-input-1qyw" name="berhenti_belajar" placeholder="Berhenti Belajar" type="time" id="berhenti_belajar_edit">
+      {% comment %} <select style="display: none;" class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-1kc3 gwd-input-6ou1 gwd-input-708f gwd-input-10cx gwd-input-1qll gwd-select-45d9 gwd-select-of5b" name="jk" id="jk_edit">
+        <option value="0" class="gwd-option-c99y">Perempuan</option>
+        <option value="1" class="gwd-option-fpfj">Laki-laki</option>
+      </select> {% endcomment %}
+
+      <select class="gwd-input-13a4 gwd-input-65dz gwd-input-15pk gwd-input-12lf gwd-input-75q7 gwd-select-8jir gwd-select-e6hu" name="kelas" placeholder="Kelas" id="kelas_edit">
+        <option value="10" selected="">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
+    </form>
+  </div>
+  {% endblock second %}
+
+  {% block script %}
+    function edit(rowid) {
+      var edit = document.getElementById('edit-data');
+      var editid = document.getElementById('toedit-id');
+      editid.value = rowid;
+
+      var data_col_map = [
+      {% for i in raw_col %} "{{i}}", {% endfor %}
+      ];
+
+      for (i = 0; i < data_col_map.length; i++) {
+        var a = data_col_map[i] + "_edit";
+        var b = (data_col_map[i] + rowid.toString());
+        console.log("a: " + a);
+        console.log("b: " + b);
+        console.log("innerHtml of b: " );
+        console.log(document.getElementById(b).innerHTML);
+        console.log("setting value of a: " );
+        document.getElementById(a).value = document.getElementById(b).innerHTML;
+      }
+
+
+      edit.style.display = 'inline';
+    }
+
+    function filter_form1() {
+      console.log(document.getElementById("to-filter").selectedIndex);
+      if (document.getElementById("to-filter").selectedIndex==0){
+        window.location.href="{% url 'SCOM_APP:datajadwal' %}";
+        return false;
+      }      
+      if (document.getElementById("filter_input").value != "") {
+        document.getElementById("filter-form").submit();
+        return false;
+      }
+      return true;
+    }
+  {% endblock script %}

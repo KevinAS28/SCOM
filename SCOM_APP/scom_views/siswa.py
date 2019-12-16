@@ -8,6 +8,12 @@ from SCOM_APP.models import *
 from SCOM_APP.scom_form.SiswaForm import SiswaForm
 from django.contrib import messages 
 from django.db.utils import IntegrityError
+from django.contrib.auth.decorators import login_required as django_login
+from django.contrib.auth.decorators import REDIRECT_FIELD_NAME
+
+def login_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url="/login"):
+    return django_login(function, redirect_field_name, login_url)
+
 
 class SisAttr(str):
     
@@ -35,10 +41,16 @@ class SiswaObj(list):
             toreturn.append(SisAttr(dat).set_data(self.columns[i]))
         return iter(toreturn)
         
-
+#@login_required
 def siswa_edit(request):
+    if (not "login" in request.session):
+        return redirect('User:login')    
+    if (not request.session["login"]):
+        return redirect('User:login') 
     if (request.method=="POST"):
         form = SiswaForm(request.POST or None)
+        print(form.errors)
+        print(request.POST)
         if (form.is_valid()):
             print("valid")
             if ("action-edit" in request.POST):
@@ -46,14 +58,16 @@ def siswa_edit(request):
                 #check existed nis
                 if not (len(InfoSiswa.objects.filter(nis=form.cleaned_data["nis"]))):
                         messages.error(request, "NIS Not Exist")
-
                 else:
-                    
                     if (request.POST["action-edit"]=="edit"):
                         print("edit")
-                        info_siswa = InfoSiswa.objects.filter(nis=form.cleaned_data["nis"])
+                        info_siswa = InfoSiswa.objects.filter(nis=form.cleaned_data["nis"])[0]
                         for key in form.cleaned_data:
                             info_siswa.__dict__[key] = form.cleaned_data[key]
+                        print(info_siswa.__dict__)
+                        jurusan = Jurusan.objects.filter(nama_singkatan_jurusan=form.cleaned_data["jurusan"])[0]
+                        info_siswa.jurusan = jurusan
+                        info_siswa.status_aktif = True if form.cleaned_data["status_aktif"]=="Aktif" else False
                         info_siswa.save()
                         
                     else:
@@ -63,8 +77,12 @@ def siswa_edit(request):
         
     return redirect("SCOM_APP:datasiswa")
     
-
+#@login_required
 def siswa_list(request, template_name='siswa.html'):
+    if (not "login" in request.session):
+        return redirect('User:login')    
+    if (not request.session["login"]):
+        return redirect('User:login') 
     def default_page(data=InfoSiswa.objects.all()):        
         # fields = list(siswa[0].__dict__.values())[1:]
         # print(fields)
@@ -74,7 +92,8 @@ def siswa_list(request, template_name='siswa.html'):
             contoh  = SiswaObj(data[0].get_data(), 0).__iter__()
             print(contoh)
         siswa_list = [SiswaObj(data[i].get_data(), i) for i in range(len(data))]
-        data = {"columns": columns, "siswa":  siswa_list, "raw_col": raw_columns}
+        majors = list(Jurusan.objects.all())
+        data = {"columns": columns, "siswa":  siswa_list, "raw_col": raw_columns, "majors": majors}
         return render(request, template_name, data)
 
     get_data = request.GET
@@ -111,14 +130,22 @@ def siswa_list(request, template_name='siswa.html'):
 
 
 
-
+#@login_required
 def new_siswa(request):
+    if (not "login" in request.session):
+        return redirect('User:login')    
+    if (not request.session["login"]):
+        return redirect('User:login') 
     if (request.method=="POST"):
         form = SiswaForm(request.POST or None)
+        print(form.errors)
+        print(request.POST)
         if (form.is_valid()):
             #check existed nis
+            
             if (len(InfoSiswa.objects.filter(nis=form.cleaned_data["nis"]))):
                 messages.error(request, "NIS Already Exist")
+                print("NIS EXIST")
             else:
                 print("valid")
                 info_siswa = InfoSiswa()
@@ -127,4 +154,6 @@ def new_siswa(request):
                 info_siswa.save()
         else:
             return redirect("SCOM_APP:datasiswa")
+
+        print(form.errors)
     return redirect("SCOM_APP:datasiswa")

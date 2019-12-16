@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -30,27 +31,8 @@
       transform: perspective(1400px) matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
       transform-style: preserve-3d;
     }
-    .gwd-img-5jmq {
-      position: absolute;
-      width: 100px;
-      height: 83.2px;
-      left: 564px;
-      top: 100px;
-    }
-    .gwd-p-343u {
-      position: absolute;
-      width: 128.667px;
-      height: 52.3333px;
-      text-align: center;
-      font-weight: bold;
-      left: 683px;
-      top: 119px;
-      color: rgb(46, 45, 45);
-      font-size: 35px;
-    }
     .gwd-div-19nh {
       position: absolute;
-      width: 332px;
       border-style: solid;
       border-width: 1px;
       border-radius: 20px;
@@ -59,69 +41,110 @@
       border-image-width: 1;
       border-image-outset: 0;
       border-image-repeat: stretch;
-      height: 175px;
       background-image: none;
       background-color: rgb(247, 247, 247);
-      left: 531px;
-      top: 245px;
+      top: 41%;
+      left: 0px;
+      width: 30%;
+      margin-left: 35%;
+      height: 30%;
     }
     .gwd-span-1a0l {
-      position: absolute;
-      width: 122px;
-      text-align: center;
+      display: block;
       height: 21px;
+      position: absolute;
+      text-align: center;
       transform-origin: 61px 10.5px 0px;
-      left: 642px;
-      top: 262px;
+      margin-left: 35%;
+      width: 29.9%;
+      font-size: 25px;
+      top: 9px;
+      left: 0%;
     }
     .gwd-input-eu0c {
+      display: block;
       position: absolute;
-      width: 125px;
-      height: 26px;
-      left: 640px;
-      top: 301px;
+      width: 50%;
+      height: 15%;
+      margin-left: 0%;
+      left: 24.51%;
+      top: 28.21%;
+      text-align: center;
     }
     .gwd-button-12jw {
-      position: absolute;
-      height: 26px;
-      background-image: none;
-      color: rgb(255, 255, 255);
-      border-radius: 5px;
-      border-image-source: none;
-      border-image-width: 1;
-      border-image-outset: 0;
-      border-image-repeat: stretch;
-      border-color: rgba(221, 221, 221, 0);
-      font-family: "Open Sans";
-      font-weight: bold;
-      top: 344px;
       background-color: rgba(4, 0, 255, 0.65);
-      width: 125px;
-      left: 644px;
+      border-color: rgba(221, 221, 221, 0);
+      border-radius: 5px;
+      border-image-outset: 0;
+      color: rgb(255, 255, 255);
+      display: block;
+      font-family: "Open Sans";
+      font-weight: 700;
+      position: absolute;
+      -webkit-appearance: none;
+      margin-left: 35%;
+      width: 35%;
+      height: 15%;
+      left: -2.45%;
+      top: 54.25%;
     }
     .gwd-span-1e9w {
-      position: absolute;
-      width: 76px;
-      height: 33px;
-      font-weight: bold;
-      font-family: "Open Sans";
-      left: 777px;
-      top: 387px;
-      border-image-source: none;
-      border-image-width: 1;
       border-image-outset: 0;
-      border-image-repeat: stretch;
-      border-color: rgba(4, 0, 255, 0.65);
       color: rgba(4, 0, 255, 0.65);
+      display: block;
+      font-family: "Open Sans";
+      font-weight: 700;
+      height: 33px;
+      position: absolute;
+      text-align: center;
+      width: 18.63%;
+      margin-left: 33%;
+      left: 7.6%;
+      top: 79.43%;
+    }
+    .gwd-img-5jmq {
+      display: block;
+      height: 83.1875px;
+      position: absolute;
+      width: 100px;
+      top: 15%;
+      left: 46.32%;
+    }
+    .gwd-p-343u {
+      color: rgb(46, 45, 45);
+      font-size: 35px;
+      font-weight: 700;
+      height: 52.3125px;
+      position: absolute;
+      text-align: center;
+      width: 128.667px;
+      top: 30%;
+      left: 45.29%;
     }
   </style>
+  {% if messages %}
+  {% for message in messages %}
+
+  <script>
+    alert("{{ message|safe }}");
+  </script>
+
+  {% endfor %}
+  {% endif %}    
 </head>
 
 <body class="htmlNoPages">
-  <img class="gwd-img-5jmq" src="smkn1cibinong.png">
+  <div class="gwd-div-19nh">
+  <span class="gwd-span-1a0l">Username</span>
+  <form action="" method="POST">
+      {% csrf_token %}
+      <input class="gwd-input-eu0c" name="username">
+      <button class="gwd-button-12jw">Lanjut</button>
+  </form>
+  <span class="gwd-span-1e9w">Lupa?</span>
+  </div>
+  <img class="gwd-img-5jmq" src="{% static 'smkn1cibinong.png' %}">
   <p class="gwd-p-343u">SCOM</p>
-  <div class="gwd-div-19nh"></div><span class="gwd-span-1a0l">NIP</span>
-  <input class="gwd-input-eu0c">
-  <button class="gwd-button-12jw">Lanjut</button><span class="gwd-span-1e9w">Lupa?</span></body>
+</body>
 
 </html>
